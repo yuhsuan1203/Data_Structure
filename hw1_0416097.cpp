@@ -16,31 +16,31 @@ int position[100000];
 
 void getText(ifstream &fin)//get the text in the input file
 {
-    int i=0;
-    while(fin.get(text[i])){
-    	i++;
+	int i=0;
+	while(fin.get(text[i])){
+		i++;
 	}
-    text_length = i;
+	text_length = i;
 
-    return;
+	return;
 }
 
 void getPattern(char *line)//get pattern in the text
 {
-    for(int i=0;line[i]!=' ';i++)
-    {
-        if(line[i]=='\0')
-        	break;
+	for(int i=0;line[i]!=' ';i++)
+	{
+		if(line[i]=='\0')
+			break;
 		pattern = new char;
-        pattern_ff = new int;
-        pattern_length++;
-    }
-    for(int i=0;i<pattern_length;i++)
-        pattern[i] = line[i];
-    for(int i=0;i<pattern_length;i++)
-        pattern_ff[i] = 0;
+		pattern_ff = new int;
+		pattern_length++;
+	}
+	for(int i=0;i<pattern_length;i++)
+		pattern[i] = line[i];
+	for(int i=0;i<pattern_length;i++)
+		pattern_ff[i] = 0;
 
-    return;
+	return;
 }
 
 void failure_function(char *p) //build the failure_function
@@ -101,10 +101,10 @@ void substring_search(ofstream &fout)
 			text_index++;
 			if(pattern_index==pattern_length){
 				if( ( text[text_index]<65 || (text[text_index]>90&&text[text_index]<97) || text[text_index]>122) &&
-				    ( text[text_index-pattern_length-1]<65 || (text[text_index-pattern_length-1]>90&&text[text_index-pattern_length-1]<97) ||text[text_index-pattern_length-1]>122)
-				  ){
-				    frequency++;
-			    }
+					( text[text_index-pattern_length-1]<65 || (text[text_index-pattern_length-1]>90&&text[text_index-pattern_length-1]<97) ||text[text_index-pattern_length-1]>122)
+				){
+					frequency++;
+				}
 				position[word_count]++;
 				count++;
 				pattern_index=0;
@@ -112,23 +112,23 @@ void substring_search(ofstream &fout)
 			}
 		}
 		else{
-            while( (pattern[pattern_index]!=text[text_index]) || (!pattern_index) ){
-                //the first character in pattern does not match the text[text_index] so move text[text_index] to the next
+			while( (pattern[pattern_index]!=text[text_index]) || (!pattern_index) ){
+				//the first character in pattern does not match the text[text_index] so move text[text_index] to the next
 				if(!pattern_index){
-                    text_index++;
-                    break;
-                }
-                //use failure_function; move pattern_index back to the last possiblly-matching character  
+					text_index++;
+					break;
+				}
+				//use failure_function; move pattern_index back to the last possiblly-matching character  
 				//if match, then break the loop (and keep examining whether the pattern is in the text or not)
 				//else go through the loop again 
 				//until 1. finding the "matching character" or 2. pattern_index = 0 (same as above)
 				else{
-                    pattern_index = pattern_ff[pattern_index-1];
-                    if(pattern[pattern_index]==text[text_index]){
-                        break;
-                    }
-                }
-            }
+					pattern_index = pattern_ff[pattern_index-1];
+					if(pattern[pattern_index]==text[text_index]){
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -153,13 +153,13 @@ int main(void)
 	fin.open(in_file.c_str());
 	fout.open(out_file.c_str());
 
-    getText(fin);
-    getPattern(text);
+	getText(fin);
+	getPattern(text);
 	failure_function(pattern);
 	substring_search(fout);
 
-    fin.close();
-    fout.close();
+	fin.close();
+	fout.close();
 
 	return 0;
 }
