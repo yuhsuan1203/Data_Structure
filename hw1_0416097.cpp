@@ -14,7 +14,7 @@ char *pattern;
 int *pattern_ff;
 int position[100000];
 
-void getText(ifstream &fin)
+void getText(ifstream &fin)//get the text in the input file
 {
     int i=0;
     while(fin.get(text[i])){
@@ -25,7 +25,7 @@ void getText(ifstream &fin)
     return;
 }
 
-void getPattern(char *line)
+void getPattern(char *line)//get pattern in the text
 {
     for(int i=0;line[i]!=' ';i++)
     {
@@ -43,7 +43,7 @@ void getPattern(char *line)
     return;
 }
 
-void failure_function(char *p)
+void failure_function(char *p) //build the failure_function
 {
 	pattern_ff[0] = 0;
 	int i = 1 , j = 0;
@@ -113,11 +113,16 @@ void substring_search(ofstream &fout)
 		}
 		else{
             while( (pattern[pattern_index]!=text[text_index]) || (!pattern_index) ){
-                if(!pattern_index){
+                //the first character in pattern does not match the text[text_index] so move text[text_index] to the next
+				if(!pattern_index){
                     text_index++;
                     break;
                 }
-                else{
+                //use failure_function; move pattern_index back to the last possiblly-matching character  
+				//if match, then break the loop (and keep examining whether the pattern is in the text or not)
+				//else go through the loop again 
+				//until 1. finding the "matching character" or 2. pattern_index = 0 (same as above)
+				else{
                     pattern_index = pattern_ff[pattern_index-1];
                     if(pattern[pattern_index]==text[text_index]){
                         break;
