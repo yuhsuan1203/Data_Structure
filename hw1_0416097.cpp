@@ -112,16 +112,16 @@ void substring_search(ofstream &fout)
 			}
 		}
 		else{
-			while( (pattern[pattern_index]!=text[text_index]) || (!pattern_index) ){
+			while(pattern[pattern_index]!=text[text_index]){
 				//the first character in pattern does not match the text[text_index] so move text[text_index] to the next
 				if(!pattern_index){
 					text_index++;
 					break;
 				}
-				//use failure_function; move pattern_index back to the last possiblly-matching character  
+				//use failure_function; move pattern_index back to the last possiblly-matching character
 				//if match, then break the loop (and keep examining whether the pattern is in the text or not)
-				//else go through the loop again 
-				//until 1. finding the "matching character" or 2. pattern_index = 0 (same as above)
+				//else go through the loop again
+				//until 1. finding the "matching character" or 2. pattern_index = 0
 				else{
 					pattern_index = pattern_ff[pattern_index-1];
 					if(pattern[pattern_index]==text[text_index]){
